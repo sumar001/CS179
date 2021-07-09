@@ -1,22 +1,20 @@
 package typechecker;
-
 import java.util.HashMap;
 
 public class SymbolTable {
-    private HashMap<String, cSymbol> classes;
+    private HashMap<String, ClassEnv> st1;
 
     public SymbolTable() {
-
-        classes = new HashMap<String, cSymbol>();
+        st1 = new HashMap<String, ClassEnv>();
     }
 
-    public void addClass(String x) {
-        cSymbol c = new cSymbol(x);
-        classes.put(x, c);
+    public void newClass(String x) {
+        ClassEnv c = new ClassEnv(x);
+        st1.put(x, c);
     }
 
-    public cSymbol getClass(String x) {
+    public ClassEnv getClass(String x) {
 
-        return classes.get(x);
+        return st1.get(x);
     }
 }
