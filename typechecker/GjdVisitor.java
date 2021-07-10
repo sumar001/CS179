@@ -4,8 +4,21 @@ import java.util.*;
 import syntaxtree.*;
 import visitor.*;
 
-public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<String, String> > {
-//
+public class GjdVisitor extends GJDepthFirst<SymbolTable, SymbolTable > {
+   ErrorMsg error = new ErrorMsg();
+   private SymbolTable st = new SymbolTable();
+   private ClassEnv currClass;
+   private MethodEnv currMethod;
+   
+   public GjdVisitor(SymbolTable x) {
+      st = x;
+   }
+   
+   public boolean getErrors() {
+
+      return error.anyErrors;
+   }
+   //
    // User-generated visitor methods below
    //
 
@@ -14,8 +27,9 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
     * f1 -> ( TypeDeclaration() )*
     * f2 -> <EOF>
     */
-   public HashMap<String, String> visit(Goal n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+    
+   public SymbolTable visit(Goal n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       n.f1.accept(this, argu);
       n.f2.accept(this, argu);
@@ -42,8 +56,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
     * f16 -> "}"
     * f17 -> "}"
     */
-   public HashMap<String, String> visit(MainClass n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(MainClass n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       n.f1.accept(this, argu);
       n.f2.accept(this, argu);
@@ -69,8 +83,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
     * f0 -> ClassDeclaration()
     *       | ClassExtendsDeclaration()
     */
-   public HashMap<String, String> visit(TypeDeclaration n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(TypeDeclaration n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       return _ret;
    }
@@ -83,8 +97,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
     * f4 -> ( MethodDeclaration() )*
     * f5 -> "}"
     */
-   public HashMap<String, String> visit(ClassDeclaration n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(ClassDeclaration n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       n.f1.accept(this, argu);
       n.f2.accept(this, argu);
@@ -104,8 +118,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
     * f6 -> ( MethodDeclaration() )*
     * f7 -> "}"
     */
-   public HashMap<String, String> visit(ClassExtendsDeclaration n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(ClassExtendsDeclaration n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       n.f1.accept(this, argu);
       n.f2.accept(this, argu);
@@ -122,8 +136,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
     * f1 -> Identifier()
     * f2 -> ";"
     */
-   public HashMap<String, String> visit(VarDeclaration n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(VarDeclaration n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       n.f1.accept(this, argu);
       n.f2.accept(this, argu);
@@ -145,8 +159,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
     * f11 -> ";"
     * f12 -> "}"
     */
-   public HashMap<String, String> visit(MethodDeclaration n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(MethodDeclaration n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       n.f1.accept(this, argu);
       n.f2.accept(this, argu);
@@ -167,8 +181,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
     * f0 -> FormalParameter()
     * f1 -> ( FormalParameterRest() )*
     */
-   public HashMap<String, String> visit(FormalParameterList n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(FormalParameterList n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       n.f1.accept(this, argu);
       return _ret;
@@ -178,8 +192,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
     * f0 -> Type()
     * f1 -> Identifier()
     */
-   public HashMap<String, String> visit(FormalParameter n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(FormalParameter n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       n.f1.accept(this, argu);
       return _ret;
@@ -189,8 +203,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
     * f0 -> ","
     * f1 -> FormalParameter()
     */
-   public HashMap<String, String> visit(FormalParameterRest n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(FormalParameterRest n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       n.f1.accept(this, argu);
       return _ret;
@@ -202,8 +216,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
     *       | IntegerType()
     *       | Identifier()
     */
-   public HashMap<String, String> visit(Type n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(Type n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       return _ret;
    }
@@ -213,8 +227,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
     * f1 -> "["
     * f2 -> "]"
     */
-   public HashMap<String, String> visit(ArrayType n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(ArrayType n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       n.f1.accept(this, argu);
       n.f2.accept(this, argu);
@@ -224,8 +238,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
    /**
     * f0 -> "boolean"
     */
-   public HashMap<String, String> visit(BooleanType n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(BooleanType n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       return _ret;
    }
@@ -233,8 +247,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
    /**
     * f0 -> "int"
     */
-   public HashMap<String, String> visit(IntegerType n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(IntegerType n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       return _ret;
    }
@@ -247,8 +261,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
     *       | WhileStatement()
     *       | PrintStatement()
     */
-   public HashMap<String, String> visit(Statement n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(Statement n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       return _ret;
    }
@@ -258,8 +272,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
     * f1 -> ( Statement() )*
     * f2 -> "}"
     */
-   public HashMap<String, String> visit(Block n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(Block n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       n.f1.accept(this, argu);
       n.f2.accept(this, argu);
@@ -272,8 +286,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
     * f2 -> Expression()
     * f3 -> ";"
     */
-   public HashMap<String, String> visit(AssignmentStatement n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(AssignmentStatement n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       n.f1.accept(this, argu);
       n.f2.accept(this, argu);
@@ -290,8 +304,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
     * f5 -> Expression()
     * f6 -> ";"
     */
-   public HashMap<String, String> visit(ArrayAssignmentStatement n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(ArrayAssignmentStatement n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       n.f1.accept(this, argu);
       n.f2.accept(this, argu);
@@ -311,8 +325,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
     * f5 -> "else"
     * f6 -> Statement()
     */
-   public HashMap<String, String> visit(IfStatement n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(IfStatement n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       n.f1.accept(this, argu);
       n.f2.accept(this, argu);
@@ -330,8 +344,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
     * f3 -> ")"
     * f4 -> Statement()
     */
-   public HashMap<String, String> visit(WhileStatement n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(WhileStatement n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       n.f1.accept(this, argu);
       n.f2.accept(this, argu);
@@ -347,8 +361,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
     * f3 -> ")"
     * f4 -> ";"
     */
-   public HashMap<String, String> visit(PrintStatement n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(PrintStatement n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       n.f1.accept(this, argu);
       n.f2.accept(this, argu);
@@ -368,8 +382,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
     *       | MessageSend()
     *       | PrimaryExpression()
     */
-   public HashMap<String, String> visit(Expression n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(Expression n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       return _ret;
    }
@@ -379,8 +393,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
     * f1 -> "&&"
     * f2 -> PrimaryExpression()
     */
-   public HashMap<String, String> visit(AndExpression n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(AndExpression n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       n.f1.accept(this, argu);
       n.f2.accept(this, argu);
@@ -392,8 +406,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
     * f1 -> "<"
     * f2 -> PrimaryExpression()
     */
-   public HashMap<String, String> visit(CompareExpression n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(CompareExpression n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       n.f1.accept(this, argu);
       n.f2.accept(this, argu);
@@ -405,8 +419,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
     * f1 -> "+"
     * f2 -> PrimaryExpression()
     */
-   public HashMap<String, String> visit(PlusExpression n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(PlusExpression n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       n.f1.accept(this, argu);
       n.f2.accept(this, argu);
@@ -418,8 +432,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
     * f1 -> "-"
     * f2 -> PrimaryExpression()
     */
-   public HashMap<String, String> visit(MinusExpression n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(MinusExpression n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       n.f1.accept(this, argu);
       n.f2.accept(this, argu);
@@ -431,8 +445,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
     * f1 -> "*"
     * f2 -> PrimaryExpression()
     */
-   public HashMap<String, String> visit(TimesExpression n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(TimesExpression n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       n.f1.accept(this, argu);
       n.f2.accept(this, argu);
@@ -445,8 +459,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
     * f2 -> PrimaryExpression()
     * f3 -> "]"
     */
-   public HashMap<String, String> visit(ArrayLookup n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(ArrayLookup n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       n.f1.accept(this, argu);
       n.f2.accept(this, argu);
@@ -459,8 +473,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
     * f1 -> "."
     * f2 -> "length"
     */
-   public HashMap<String, String> visit(ArrayLength n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(ArrayLength n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       n.f1.accept(this, argu);
       n.f2.accept(this, argu);
@@ -475,8 +489,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
     * f4 -> ( ExpressionList() )?
     * f5 -> ")"
     */
-   public HashMap<String, String> visit(MessageSend n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(MessageSend n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       n.f1.accept(this, argu);
       n.f2.accept(this, argu);
@@ -490,8 +504,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
     * f0 -> Expression()
     * f1 -> ( ExpressionRest() )*
     */
-   public HashMap<String, String> visit(ExpressionList n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(ExpressionList n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       n.f1.accept(this, argu);
       return _ret;
@@ -501,8 +515,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
     * f0 -> ","
     * f1 -> Expression()
     */
-   public HashMap<String, String> visit(ExpressionRest n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(ExpressionRest n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       n.f1.accept(this, argu);
       return _ret;
@@ -519,8 +533,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
     *       | NotExpression()
     *       | BracketExpression()
     */
-   public HashMap<String, String> visit(PrimaryExpression n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(PrimaryExpression n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       return _ret;
    }
@@ -528,8 +542,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
    /**
     * f0 -> <INTEGER_LITERAL>
     */
-   public HashMap<String, String> visit(IntegerLiteral n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(IntegerLiteral n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       return _ret;
    }
@@ -537,8 +551,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
    /**
     * f0 -> "true"
     */
-   public HashMap<String, String> visit(TrueLiteral n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(TrueLiteral n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       return _ret;
    }
@@ -546,8 +560,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
    /**
     * f0 -> "false"
     */
-   public HashMap<String, String> visit(FalseLiteral n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(FalseLiteral n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       return _ret;
    }
@@ -555,8 +569,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
    /**
     * f0 -> <IDENTIFIER>
     */
-   public HashMap<String, String> visit(Identifier n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(Identifier n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       return _ret;
    }
@@ -564,8 +578,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
    /**
     * f0 -> "this"
     */
-   public HashMap<String, String> visit(ThisExpression n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(ThisExpression n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       return _ret;
    }
@@ -577,8 +591,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
     * f3 -> Expression()
     * f4 -> "]"
     */
-   public HashMap<String, String> visit(ArrayAllocationExpression n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(ArrayAllocationExpression n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       n.f1.accept(this, argu);
       n.f2.accept(this, argu);
@@ -593,8 +607,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
     * f2 -> "("
     * f3 -> ")"
     */
-   public HashMap<String, String> visit(AllocationExpression n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(AllocationExpression n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       n.f1.accept(this, argu);
       n.f2.accept(this, argu);
@@ -606,8 +620,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
     * f0 -> "!"
     * f1 -> Expression()
     */
-   public HashMap<String, String> visit(NotExpression n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(NotExpression n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       n.f1.accept(this, argu);
       return _ret;
@@ -618,8 +632,8 @@ public class GjdVisitor extends GJDepthFirst<HashMap<String, String>, HashMap<St
     * f1 -> Expression()
     * f2 -> ")"
     */
-   public HashMap<String, String> visit(BracketExpression n, HashMap<String, String> argu) {
-      HashMap<String, String> _ret=null;
+   public SymbolTable visit(BracketExpression n, SymbolTable argu) {
+      SymbolTable _ret=null;
       n.f0.accept(this, argu);
       n.f1.accept(this, argu);
       n.f2.accept(this, argu);
