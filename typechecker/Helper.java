@@ -6,21 +6,6 @@ import java.util.Set;
 
 public class Helper {
 
-    public static boolean Distinc_Method(NodeListOptional names){
-        Set<String> distinct = new HashSet<>();
-
-        for(int j = 0; j < names.size(); j++){
-            String methodName = Helper.methodName((MethodDeclaration) names.elementAt(j));
-            if(distinct.contains(methodName)){
-                return false;
-            }
-            else{
-                distinct.add(methodName);
-            }
-        }
-        return true;
-    }
-
     public static boolean idDistinct(NodeListOptional ids){
         Set<String> distinct = new HashSet<>();
 
@@ -44,6 +29,21 @@ public class Helper {
                 return false;
             } else {
                 distinct.add(id);
+            }
+        }
+        return true;
+    }
+
+    public static boolean Distinc_Method(NodeListOptional names){
+        Set<String> distinct = new HashSet<>();
+
+        for(int j = 0; j < names.size(); j++){
+            String methodName = Helper.methodName((MethodDeclaration) names.elementAt(j));
+            if(distinct.contains(methodName)){
+                return false;
+            }
+            else{
+                distinct.add(methodName);
             }
         }
         return true;
@@ -92,19 +92,19 @@ public class Helper {
 
     }
 
-    public static String methodName(MethodDeclaration method) {// helper function methodName return
+    public static String methodName(MethodDeclaration method) {
         return method.f2.f0.toString();
     }
 
-    public static String methodType(MethodDeclaration method) {// helper function methodName return
+    public static String methodType(MethodDeclaration method) {
         return getType(method.f1);
     }
 
-    public static String getIntegerType(IntegerType integer) {// helper function methodName return
+    public static String getIntegerType(IntegerType integer) {
         return integer.f0.toString();
     }
 
-    public static String getId(Identifier id) {// helper function methodName return
+    public static String getId(Identifier id) {
         return id.f0.toString();
     }
 

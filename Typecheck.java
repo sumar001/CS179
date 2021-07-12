@@ -11,14 +11,14 @@ public class Typecheck {
             //The accept will go down the tree and accept everything
             DfsVisitor dv = new DfsVisitor();
             root.accept(dv);
-            if (dv.getErrors() == true) {
+            if (dv.foundErrors() == true) {
                 System.out.println("Type error");
                 System.exit(1);
             }
             else {
                 GjdVisitor gv = new GjdVisitor(dv.getSymbolTable());
                 root.accept(gv, dv.getSymbolTable());
-                if(gv.getErrors() == true){
+                if(gv.findErrors() == true){
                     System.out.println("Type error");
                     System.exit(1);
                 }

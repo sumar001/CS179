@@ -7,9 +7,10 @@ import java.util.Set;
 
 
 class ErrorMsg {
-    boolean anyErrors;
-    void complain(String msg) {
-        anyErrors = true;
+    boolean err;
+    void alrt(String msg) {
+
+        err = true;
     }
 }
 
@@ -19,9 +20,9 @@ public class DfsVisitor extends DepthFirstVisitor {
     private ClassEnv currClass;
     private MethodEnv currMethod;
 
-    public boolean getErrors() {
+    public boolean foundErrors() {
 
-        return error.anyErrors;
+        return error.err;
     }
 
     public SymbolTable getSymbolTable() {
@@ -42,7 +43,7 @@ public class DfsVisitor extends DepthFirstVisitor {
             n.f0.accept(this);
             n.f1.accept(this);
         } else {
-            error.complain("Identical names of Class");
+            error.alrt("Identical names of Class");
         }
     }
 
@@ -63,12 +64,12 @@ public class DfsVisitor extends DepthFirstVisitor {
         if (Helper.idDistinct(n.f3)) {
             n.f3.accept(this);
         } else {
-            error.complain("Identical ID names");
+            error.alrt("Identical ID names");
         }
         if (Helper.Distinc_Method(n.f4)) {
             n.f4.accept(this);
         } else {
-            error.complain("Method names are same");
+            error.alrt("Method names are same");
         }
 
     }
@@ -85,15 +86,15 @@ public class DfsVisitor extends DepthFirstVisitor {
             if (Helper.idDistinct(n.f5)) {
                 n.f5.accept(this);
             } else {
-                error.complain("Identical ID names");
+                error.alrt("Identical ID names");
             }
             if (Helper.Distinc_Method(n.f6)) {
                 n.f6.accept(this);
             } else {
-                error.complain("Identical method name");
+                error.alrt("Identical method name");
             }
         } else {
-            error.complain("Method is Overloaded");
+            error.alrt("Method is Overloaded");
         }
     }
 
@@ -104,13 +105,13 @@ public class DfsVisitor extends DepthFirstVisitor {
             if (Helper.parameterDistinct((FormalParameterList) n.f4.node)) {
                 n.f4.accept(this);
             } else {
-                error.complain("Identical {Params} name");
+                error.alrt("Identical {Params} name");
             }
         }
         if (Helper.idDistinct(n.f7)) {
             n.f7.accept(this);
         } else {
-            error.complain("Identical ID names");
+            error.alrt("Identical ID names");
         }
     }
 
