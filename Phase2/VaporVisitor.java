@@ -5,7 +5,9 @@ import syntaxtree.*;
 import java.util.*;
 
 public class VaporVisitor extends DepthFirstVisitor{
-    //
+   
+   private int temp_counter = 0;
+   //
    // User-generated visitor methods below
    //
 
@@ -41,6 +43,7 @@ public class VaporVisitor extends DepthFirstVisitor{
     * f17 -> "}"
     */
    public void visit(MainClass n) {
+      System.out.println("Func Main()");
       n.f0.accept(this);
       n.f1.accept(this);
       n.f2.accept(this);
@@ -59,6 +62,7 @@ public class VaporVisitor extends DepthFirstVisitor{
       n.f15.accept(this);
       n.f16.accept(this);
       n.f17.accept(this);
+      System.out.println("  ret");
    }
 
    /**
@@ -311,6 +315,7 @@ public class VaporVisitor extends DepthFirstVisitor{
       n.f0.accept(this);
       n.f1.accept(this);
       n.f2.accept(this);
+      System.out.println("  PrintIntS(t_" + String.valueOf(temp_counter - 1) + ")");
       n.f3.accept(this);
       n.f4.accept(this);
    }
@@ -361,6 +366,8 @@ public class VaporVisitor extends DepthFirstVisitor{
       n.f0.accept(this);
       n.f1.accept(this);
       n.f2.accept(this);
+      System.out.println(  "t_" + String.valueOf(temp_counter) + " = Add(t_" + String.valueOf(temp_counter-1) + " t_" + String.valueOf(temp_counter-2) + ")");
+      temp_counter++;
    }
 
    /**
@@ -463,6 +470,8 @@ public class VaporVisitor extends DepthFirstVisitor{
     * f0 -> <INTEGER_LITERAL>
     */
    public void visit(IntegerLiteral n) {
+      System.out.println("  t_" + String.valueOf(temp_counter) + "=" + n.f0.toString());
+      temp_counter++;
       n.f0.accept(this);
    }
 
