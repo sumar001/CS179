@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Phase2-Intermediate-Code-Generation">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/jtb.jar!/" />
+      <root url="jar://$PROJECT_DIR$/vapor.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Support">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Phase2Tester/Support/minijava-parser.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Phase2Tester/Support/vapor.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
